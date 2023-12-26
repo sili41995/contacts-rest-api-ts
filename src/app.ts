@@ -2,8 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
-import { IError } from 'types/types';
-import authRouter from 'routes/api/auth';
+import { IError } from './types/types';
+import authRouter from './routes/api/auth';
 
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
