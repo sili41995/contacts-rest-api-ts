@@ -1,8 +1,8 @@
-const getImageFilename = (url) => {
+const getImageFilename = (url: string): string => {
   const imagePath = url.split('/');
   const [filename] = imagePath[imagePath.length - 1].split('.');
 
   return filename;
 };
 
-module.exports = getImageFilename;
+export default getImageFilename;

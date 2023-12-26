@@ -1,20 +1,15 @@
-import { NextFunction } from 'express';
-import { Document } from 'mongoose';
-import { IError } from 'types/types';
+import { IUser } from '../types/types';
 
-const preUpdate = function (this: any, next: NextFunction) {
+const preUpdate = function (this: any, next: () => void) {
   this.options.new = true;
   this.options.runValidators = true;
   next();
 };
 
-const handleMongooseError = (
-  error: IError,
-  data: Document,
-  next: NextFunction
-) => {
-  error.status = 400;
+const handleMongooseError = (error: any, data: IUser, next: () => void) => {
+  const { name, code } = error;
+  error.status = name === 'MongoServerError' && code === 11000 ? 409 : 400;
   next();
 };
 
-module.exports = { preUpdate, handleMongooseError };
+export { handleMongooseError, preUpdate };

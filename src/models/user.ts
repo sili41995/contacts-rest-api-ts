@@ -1,10 +1,10 @@
-const { Schema, model } = require('mongoose');
-const Joi = require('joi');
-const { preUpdate, handleMongooseError } = require('./hooks');
-const errorMessages = require('../constants/errorMessages');
-const { regEx, defaultAvatarsURL } = require('../constants');
+import Joi from 'joi';
+import { Schema, model } from 'mongoose';
+import { IUser } from '../types/types';
+import { ErrorMessages, regExp, DefaultAvatarsURL } from '../constants';
+import { preUpdate, handleMongooseError } from './hooks';
 
-const { phoneRegEx, emailRegEx, dateOfBirthRegEx } = regEx;
+const { phoneRegEx, emailRegEx, dateOfBirthRegEx } = regExp;
 
 const {
   emailRegExErr,
@@ -14,9 +14,9 @@ const {
   passwordLengthErr,
   nameRequiredErr,
   dateOfBirthRegExErr,
-} = errorMessages;
+} = ErrorMessages;
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -48,7 +48,7 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: defaultAvatarsURL.user,
+      default: DefaultAvatarsURL.user,
     },
   },
   { versionKey: false, timestamps: true }
@@ -86,6 +86,6 @@ const signInSchema = Joi.object({
   email: emailSettings,
 });
 
-const User = model('user', userSchema);
+const User = model<IUser>('user', userSchema);
 
-module.exports = { User, signUpSchema, signInSchema };
+export { User, signUpSchema, signInSchema };

@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
-import { IError } from './types/types';
+import { IHttpError } from './types/types';
 import authRouter from './routes/api/auth';
 
 const app = express();
@@ -20,7 +20,7 @@ app.use((req: Request, res: Response) => {
 });
 
 app.use(
-  (err: IError, req: Request, res: Response, next: NextFunction): void => {
+  (err: IHttpError, req: Request, res: Response, next: NextFunction): void => {
     res.status(err.status).json({ message: err.message });
   }
 );
