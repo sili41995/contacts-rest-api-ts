@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-const { isValidObjectId } = require('mongoose');
-const { httpError } = require('../utils');
+import { isValidObjectId } from 'mongoose';
+import { httpError } from '../utils';
 
 const isValidId = (req: Request, res: Response, next: NextFunction): void => {
   const { contactId } = req.params;

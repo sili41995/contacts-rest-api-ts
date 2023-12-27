@@ -1,9 +1,13 @@
+import { UploadApiResponse } from 'cloudinary';
 import fs from 'fs/promises';
 import cloudinary from './cloudinary';
 import { DefaultAvatarsURL } from '../constants';
-import { IUpdateImageProps } from 'types/types';
+import { IUpdateImageProps } from '../types/types';
 
-const updateImage = async ({ path, filename }: IUpdateImageProps) => {
+const updateImage = async ({
+  path,
+  filename,
+}: IUpdateImageProps): Promise<UploadApiResponse> => {
   const isDefaultAvatar = Object.values(DefaultAvatarsURL).some((url) =>
     url.includes(filename)
   );

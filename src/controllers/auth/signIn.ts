@@ -1,13 +1,17 @@
-import { NextFunction, Response } from 'express';
-import { DecodedToken, IAuthRequest } from '../../types/types';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { NextFunction, Response } from 'express';
+import { DecodedToken, IAuthRequest } from '../../types/types';
 import { User } from '../../models/user';
 import { ctrlWrapper, httpError } from '../../utils';
 
 const { SECRET_KEY } = process.env;
 
-const signIn = async (req: IAuthRequest, res: Response, next: NextFunction) => {
+const signIn = async (
+  req: IAuthRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   const isValidPassword = await bcrypt.compare(password, user?.password ?? '');

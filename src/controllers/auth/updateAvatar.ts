@@ -12,7 +12,7 @@ const updateAvatar = async (
   req: IAuthRequest,
   res: Response,
   next: NextFunction
-) => {
+):Promise<void> => {
   const { avatar, _id: id } = req.user as IUser;
   const { path } = req.file as MulterFile;
   const filename = getImageFilename(avatar);

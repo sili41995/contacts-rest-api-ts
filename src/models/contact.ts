@@ -1,15 +1,15 @@
-const { Schema, model } = require('mongoose');
-const Joi = require('joi');
-const { preUpdate, handleMongooseError } = require('./hooks');
-const errorMessages = require('../constants/errorMessages');
-const { regEx, defaultAvatarsURL } = require('../constants');
+import { Schema, model } from 'mongoose';
+import Joi from 'joi';
+import { preUpdate, handleMongooseError } from './hooks';
+import { regExp, DefaultAvatarsURL, ErrorMessages } from '../constants';
+import { IContact } from '../types/types';
 
-const { phoneRegEx, emailRegEx } = regEx;
+const { phoneRegEx, emailRegEx } = regExp;
 
 const { emailRegExErr, phoneRegExErr, phoneRequiredErr, nameRequiredErr } =
-  errorMessages;
+  ErrorMessages;
 
-const contactSchema = new Schema(
+const contactSchema = new Schema<IContact>(
   {
     name: { type: String, required: [true, nameRequiredErr] },
     phone: {
@@ -27,7 +27,7 @@ const contactSchema = new Schema(
     favorite: { type: Boolean, default: false },
     avatar: {
       type: String,
-      default: defaultAvatarsURL.contact,
+      default: DefaultAvatarsURL.contact,
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -59,7 +59,6 @@ const addSchema = Joi.object({
 const updateSchema = Joi.object()
   .min(1)
   .messages({ 'object.min': 'Missing fields' });
-
 const updateStatusContactSchema = Joi.object()
   .keys({
     favorite: Joi.boolean(),
@@ -68,11 +67,6 @@ const updateStatusContactSchema = Joi.object()
     'object.unknown': 'An unexpected property was found in the object',
   });
 
-const Contact = model('contact', contactSchema);
+const Contact = model<IContact>('contact', contactSchema);
 
-module.exports = {
-  Contact,
-  addSchema,
-  updateSchema,
-  updateStatusContactSchema,
-};
+export { Contact, addSchema, updateSchema, updateStatusContactSchema };

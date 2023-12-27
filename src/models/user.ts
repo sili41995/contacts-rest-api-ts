@@ -80,7 +80,6 @@ const signUpSchema = Joi.object({
     'string.pattern.base': dateOfBirthRegExErr,
   }),
 });
-
 const signInSchema = Joi.object({
   password: passwordSettings,
   email: emailSettings,

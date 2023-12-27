@@ -1,6 +1,6 @@
+import bcrypt from 'bcryptjs';
 import { NextFunction, Response } from 'express';
 import { IAuthRequest } from '../../types/types';
-import bcrypt from 'bcryptjs';
 import { User } from '../../models/user';
 import { ctrlWrapper, httpError } from '../../utils';
 import uploadImage from '../../utils/uploadImage';

@@ -1,6 +1,6 @@
-import { NextFunction, Response } from 'express';
-import { DecodedToken, IAuthRequest } from '../types/types';
 import jwt, { Secret } from 'jsonwebtoken';
+import { NextFunction, Response } from 'express';
+import { DecodedToken, IAuthRequest, IRequest } from '../types/types';
 import { ctrlWrapper, httpError } from '../utils';
 import { User } from '../models/user';
 
@@ -37,4 +37,4 @@ const authenticate = async (
   }
 };
 
-export default ctrlWrapper(authenticate);
+export default ctrlWrapper<IRequest>(authenticate);

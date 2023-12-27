@@ -1,23 +1,23 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   add,
   deleteById,
   getAll,
   getById,
   updateById,
   updateAvatarById,
-} = require('../../controllers/contacts');
-const {
+} from '../../controllers/contacts';
+import {
   validateBody,
   isValidId,
   authenticate,
   upload,
-} = require('../../middlewares');
-const {
+} from '../../middlewares';
+import {
   addSchema,
   updateSchema,
   updateStatusContactSchema,
-} = require('../../models/contact');
+} from '../../models/contact';
 
 const router = express.Router();
 
@@ -26,7 +26,7 @@ router.use(authenticate);
 router.get('/', getAll);
 router.get('/:contactId', isValidId, getById);
 router.post('/', upload.single('avatar'), validateBody(addSchema), add);
-router.delete('/:contactId', isValidId, deleteById);
+router.delete('/:contactId', isValidId, authenticate, deleteById);
 router.put('/:contactId', isValidId, validateBody(updateSchema), updateById);
 router.patch(
   '/:contactId/favorite',
@@ -42,4 +42,4 @@ router.patch(
   updateAvatarById
 );
 
-module.exports = router;
+export default router;

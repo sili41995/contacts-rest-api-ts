@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 import { Request } from 'express';
 
 export type MulterCB = (error: Error | null, result?: boolean | string) => void;
@@ -34,6 +34,22 @@ export interface IUser extends Document {
   dateOfBirth?: string;
   token: string | null | undefined;
   avatar: string;
+}
+
+export interface INewContact extends Document {
+  _id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  role?: string;
+  description?: string;
+  tgUsername?: string;
+  favorite?: boolean;
+  avatar: string;
+}
+
+export interface IContact extends INewContact {
+  owner: Schema.Types.ObjectId | undefined;
 }
 
 export interface IFindFilterProps {
@@ -79,5 +95,9 @@ export interface IRequest extends Request {
 }
 
 export interface IAuthRequest extends IRequest {
-  body: Pick<IUser, 'email' | 'password' | 'avatar'>;
+  body: IUser;
+}
+
+export interface IContactsRequest extends IRequest {
+  body: INewContact;
 }
