@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { MulterCB, MulterFile } from '../types/types';
 import multer from 'multer';
 import path from 'path';
+import { MulterFile } from '../types/types';
 import { httpError } from '../utils';
 
 const destination = path.resolve('temp');
